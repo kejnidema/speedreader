@@ -1,8 +1,4 @@
-package main
-
-func main() {
-	print("hi")
-}
+package epub
 
 type PackageDocument struct {
 	metadata              MetaData
@@ -46,6 +42,102 @@ type Item struct {
 	mediaOverlay string
 	mediaType    string
 	properties   []string
+}
+
+type Spine struct {
+	id                       string
+	pageProgressionDirection string
+	toc                      string // legacy
+	itemref                  ItemRef
+}
+
+type ItemRef struct {
+	id         string
+	idref      string
+	linear     string
+	properties []string
+}
+
+type Collection struct {
+	dir      string
+	id       string
+	role     string
+	XMLLang  string
+	metadata MetaData
+	// collection Collection
+	link Link
+}
+
+type nav struct {
+	h1 string
+	h2 string
+	h3 string
+	h4 string
+	h5 string
+	h6 string
+	ol []string
+	li []struct {
+		span string
+		a    string
+		li   string
+	}
+	span string
+	a    string
+}
+
+type smil struct {
+	version    string
+	id         string
+	epubPrefix string
+	head       Head
+	body       Body
+}
+
+type Head struct {
+	metadata MetaData // this is false for this I think
+}
+
+type Body struct {
+	epubType    string
+	id          string
+	epubTextRef string
+	seq         Seq
+	par         Par
+}
+
+type Seq struct {
+	epubType    string
+	id          string
+	epubTextRef string
+	seq         *Seq
+	par         Par
+}
+
+type Par struct {
+	epubType string
+	id       string
+	text     Text
+	audio    Audio
+}
+
+type Text struct {
+	src string
+	id  string
+}
+
+type Audio struct {
+	id        string
+	src       string
+	clipBegin string
+	clipEnd   string
+}
+
+type MustSetProperties struct {
+	mathml          string
+	remoteResources string
+	scripted        string
+	svg             string
+	propSwitch      string
 }
 
 type Link struct {
